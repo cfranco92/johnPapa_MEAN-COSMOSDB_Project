@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const heroSchema = new Schema({
-    id: { type: Number, requiered: true, unique: true},
+
+const heroSchema = new Schema(
+  {
+    id: { type: Number, required: true },
     name: String,
     saying: String
-}, {
-    collection: 'Heroes'
-});
+  },
+  {
+    collection: 'heroes',
+    read: 'nearest'
+  }
+);
+
 const Hero = mongoose.model('Hero', heroSchema);
+
 module.exports = Hero;

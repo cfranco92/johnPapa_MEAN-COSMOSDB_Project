@@ -1,19 +1,25 @@
 const mongoose = require('mongoose');
 
+/**
+ * Set to Node.js native promises
+ * Per http://mongoosejs.com/docs/promises.html
+ */
 mongoose.Promise = global.Promise;
 
-// TODO
 const env = require('./env/environment');
 
 // eslint-disable-next-line max-len
-const mongoUri = `mongodb://${env.dbName}:${env.key}@${env.dbName}.documents.azure.com:${env.cosmosPort}/?ssl=true`;
+const mongoUri = `mongodb://${env.dbName}:${env.key}@${env.dbName}.documents.azure.com:${env.cosmosPort}/?ssl=true`; //&replicaSet=globaldb`;
 
 function connect() {
-    return mongoose.connect(mongoUri, { useNewUrlParser: true});
-    // return mongoose.connect(mongoUri, { useMongoClient: true });
+//  mongoose.set('debug', true);
+mongoose.set('useCreateIndex', true);
+// mongoose.set('useNewUrlParser', true);
+return mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
+//  return mongoose.connect(mongoUri, { useMongoClient: true });
 }
 
 module.exports = {
-    connect,
-    mongoose
-}
+  connect,
+  mongoose
+};

@@ -10,7 +10,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(root, './src/client/dist/angular-cosmosdb')));
+
 app.use('/api', routes);
+
 app.get('*', (req,res) => {
     res.sendFile(path.resolve('./src/client/dist/angular-cosmosdb/index.html'));
 });
